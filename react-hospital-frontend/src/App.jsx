@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Layout, Menu, Button, Grid } from 'antd';
 import {
   MedicineBoxOutlined,
@@ -24,25 +24,35 @@ import Diseases from './pages/Diseases';
 import Appointments from './pages/Appointments';
 import Users from './pages/Users';
 import PharmaceuticalAdd from './pages/PharmaceuticalAdd';
-
+import Dashboard from './pages/Dashboard';
+import Treatments from './pages/Treatments';
+import PatientDashboard from './pages/PatientDashboard';
+import PatientLogin from './pages/PatientLogin';
+import PatientBookAppointment from './pages/PatientBookAppointment';
+import PatientAppointmentHistory from './pages/PatientAppointmentHistory';
+import PatientConsult from './pages/PatientConsult';
+import PatientRegister from './pages/PatientRegister';
+import PatientProfile from './pages/PatientProfile';
 const { Header, Sider, Content } = Layout;
 const { useBreakpoint } = Grid;
 
 const menuItems = [
-  { key: '/pharmaceuticals', icon: <MedicineBoxOutlined />, label: <Link to="/pharmaceuticals">Thuốc</Link> },
-  { key: '/patients', icon: <UserOutlined />, label: <Link to="/patients">Bệnh nhân</Link> },
-  { key: '/medical-records', icon: <FileTextOutlined />, label: <Link to="/medical-records">Hồ sơ bệnh án</Link> },
-  { key: '/employees', icon: <TeamOutlined />, label: <Link to="/employees">Nhân viên</Link> },
-  { key: '/doctors', icon: <SolutionOutlined />, label: <Link to="/doctors">Bác sĩ</Link> },
-  { key: '/diseases', icon: <ProfileOutlined />, label: <Link to="/diseases">Bệnh</Link> },
-  { key: '/appointments', icon: <CalendarOutlined />, label: <Link to="/appointments">Lịch hẹn</Link> },
-  { key: '/users', icon: <UsergroupAddOutlined />, label: <Link to="/users">Người dùng</Link> },
+  { key: '/', icon: <UserOutlined />, label: 'Dashboard' },
+  { key: '/pharmaceuticals', icon: <MedicineBoxOutlined />, label: 'Thuốc' },
+  { key: '/patients', icon: <UserOutlined />, label: 'Bệnh nhân' },
+  { key: '/medical-records', icon: <FileTextOutlined />, label: 'Hồ sơ bệnh án' },
+  { key: '/employees', icon: <TeamOutlined />, label: 'Nhân viên' },
+  { key: '/doctors', icon: <SolutionOutlined />, label: 'Bác sĩ' },
+  { key: '/treatments', icon: <ProfileOutlined />, label: 'Phác đồ' },
+  { key: '/appointments', icon: <CalendarOutlined />, label: 'Lịch hẹn' },
+  { key: '/users', icon: <UsergroupAddOutlined />, label: 'Người dùng' },
 ];
 
 function AppLayout() {
   const location = useLocation();
   const screens = useBreakpoint();
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
 
   // Tự động collapse khi màn hình nhỏ
   React.useEffect(() => {
@@ -50,11 +60,27 @@ function AppLayout() {
     else setCollapsed(false);
   }, [screens.md]);
 
+  // Nếu là route bệnh nhân thì chỉ render nội dung bệnh nhân, không render layout admin
+  if (location.pathname.startsWith('/patient')) {
+    return (
+      <Routes>
+        <Route path="/patient-login" element={<PatientLogin />} />
+        <Route path="/patient/register" element={<PatientRegister />} />
+        <Route path="/patient/home" element={<PatientDashboard />} />
+        <Route path="/patient/appointments/book" element={<PatientBookAppointment />} />
+        <Route path="/patient/appointments/history" element={<PatientAppointmentHistory />} />
+        <Route path="/patient/consult" element={<PatientConsult />} />
+        <Route path="/patient/info" element={<PatientProfile />} />
+        {/* Có thể thêm các route bệnh nhân khác ở đây */}
+      </Routes>
+    );
+  }
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
-        width={160}
-        style={{ background: '#fff', boxShadow: '2px 0 8px #f0f1f2' }}
+        width={210}
+        style={{ background: '#fff', boxShadow: '2px 0 8px #f0f1f2', borderTopRightRadius: 18, borderBottomRightRadius: 18 }}
         breakpoint="md"
         collapsedWidth={0}
         collapsible
@@ -62,14 +88,15 @@ function AppLayout() {
         onCollapse={setCollapsed}
         trigger={null}
       >
-        <div style={{ height: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 16, color: '#1890ff', letterSpacing: 1 }}>
+        <div style={{ height: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 20, color: '#1890ff', letterSpacing: 1, marginBottom: 8 }}>
           HOSPITAL SYS
         </div>
         <Menu
           mode="inline"
           selectedKeys={[location.pathname]}
-          style={{ height: '100%', borderRight: 0, fontSize: 15 }}
+          style={{ height: '100%', borderRight: 0, fontSize: 17, fontWeight: 500, background: 'transparent' }}
           items={menuItems}
+          onClick={({ key }) => navigate(key)}
         />
       </Sider>
       <Layout>
@@ -90,6 +117,7 @@ function AppLayout() {
         </Header>
         <Content style={{ padding: '16px', minHeight: '100vh', background: '#f0f2f5' }}>
           <Routes>
+            <Route path="/" element={<Dashboard />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/pharmaceuticals" element={<PharmaceuticalList />} />
@@ -98,10 +126,11 @@ function AppLayout() {
             <Route path="/employees" element={<Employees />} />
             <Route path="/doctors" element={<Doctors />} />
             <Route path="/diseases" element={<Diseases />} />
+            <Route path="/treatments" element={<Treatments />} />
             <Route path="/appointments" element={<Appointments />} />
             <Route path="/users" element={<Users />} />
             <Route path="/pharmaceutical/add" element={<PharmaceuticalAdd />} />
-            <Route path="*" element={<PharmaceuticalList />} />
+            <Route path="*" element={<Dashboard />} />
           </Routes>
         </Content>
       </Layout>

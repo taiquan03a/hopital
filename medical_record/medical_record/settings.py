@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-1*7ouqbs!t(5hw^hp5k8rx9l_8ps_fz0!*49b)shyj3!(%t%=v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 PORT = 4048
 
 
@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     'rest_framework',
     'medical_record_service',
 ]

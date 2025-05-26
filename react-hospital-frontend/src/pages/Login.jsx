@@ -55,7 +55,7 @@ const Login = () => {
                                 localStorage.setItem('user_id', response.user.id);
                             }
                             message.success('Đăng nhập thành công!');
-                            setTimeout(() => navigate('/pharmaceuticals'), 1000);
+                            setTimeout(() => navigate('/'), 1000);
                         } catch (err) {
                             if (err.response && err.response.data) {
                                 const errors = err.response.data;

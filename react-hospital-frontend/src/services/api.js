@@ -23,6 +23,7 @@ export const registerUser = (data) => axiosInstance.post('/user/register/', data
 export const verifyToken = () => axiosInstance.get('/user/verify-token/').then(res => res.data);
 export const validToken = () => axiosInstance.post('/user/valid/').then(res => res.data);
 export const getAllUsers = () => axiosInstance.get('/user/all/').then(res => res.data);
+export const loginUser = (data) => axiosInstance.post('/user/login/', data).then(res => res.data);
 
 // API Pharmaceutical
 export const getAllCategories = () => axiosInstance.get('/pharmaceutical-api/category/all/').then(res => res.data);
@@ -58,7 +59,7 @@ export const getAllPositions = () => axiosInstance.get('/employees-api/positions
 export const addPosition = (data) => axiosInstance.post('/employees-api/positions/', data).then(res => res.data);
 
 // API Doctors
-export const getAllDoctors = () => axiosInstance.get('/doctor-api/doctor/all').then(res => res.data);
+export const getAllDoctors = () => axiosInstance.get('/doctor-api/doctor/all/').then(res => res.data);
 export const getDoctorDetail = (id) => axiosInstance.get(`/doctor-api/doctor/${id}/`).then(res => res.data);
 export const addDoctor = (data) => axiosInstance.post('/doctor-api/doctor/add/', data).then(res => res.data);
 export const updateDoctor = (id, data) => axiosInstance.put(`/doctor-api/doctor/${id}/`, data).then(res => res.data);
@@ -69,6 +70,30 @@ export const getAppointmentsByPatient = (patient_id) => axiosInstance.get(`/appo
 export const addAppointment = (data) => axiosInstance.post('/appointment-api/appointments/', data).then(res => res.data);
 export const updateAppointment = (id, data) => axiosInstance.put(`/appointment-api/appointments/${id}/`, data).then(res => res.data);
 export const deleteAppointment = (id) => axiosInstance.delete(`/appointment-api/appointments/${id}/`).then(res => res.data);
+
+// API Reexaminations
+export const getAllReexaminations = () => axiosInstance.get('/appointment-api/reexaminations/').then(res => res.data);
+export const addReexamination = (data) => axiosInstance.post('/appointment-api/reexaminations/', data).then(res => res.data);
+export const updateReexamination = (id, data) => axiosInstance.put(`/appointment-api/reexaminations/${id}/`, data).then(res => res.data);
+
+// API Symptoms
+export const getAllSymptoms = () => axiosInstance.get('/disease-api/symptoms/list/').then(res => res.data);
+export const addSymptom = (data) => axiosInstance.post('/disease-api/symptoms/', data).then(res => res.data);
+export const updateSymptom = (id, data) => axiosInstance.put(`/disease-api/symptoms/${id}/`, data).then(res => res.data);
+export const deleteSymptom = (id) => axiosInstance.delete(`/disease-api/symptoms/${id}/`).then(res => res.data);
+
+// API Diseases
+export const getAllDiseases = () => axiosInstance.get('/disease-api/diseases/list/').then(res => res.data);
+export const getDiseaseDetail = (id) => axiosInstance.get(`/disease-api/diseases/${id}/`).then(res => res.data);
+export const addDisease = (data) => axiosInstance.post('/disease-api/diseases/', data).then(res => res.data);
+export const updateDisease = (id, data) => axiosInstance.put(`/disease-api/diseases/${id}/`, data).then(res => res.data);
+export const deleteDisease = (id) => axiosInstance.delete(`/disease-api/diseases/${id}/`).then(res => res.data);
+
+// API Treatments
+export const getAllTreatments = () => axiosInstance.get('/disease-api/treatments/list/').then(res => res.data);
+export const addTreatment = (data) => axiosInstance.post('/disease-api/treatments/', data).then(res => res.data);
+export const updateTreatment = (id, data) => axiosInstance.put(`/disease-api/treatments/${id}/`, data).then(res => res.data);
+export const deleteTreatment = (id) => axiosInstance.delete(`/disease-api/treatments/${id}/`).then(res => res.data);
 
 // Add this new function to handle errors
 export const handleError = (err) => {

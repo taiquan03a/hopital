@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-mkd=%=p$hextl3&8+wkl(mgb96u3om8#k(1@gu4fvq2@b&3zt$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = []
 PORT = 4044
 
 
@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     'rest_framework',
     'pharmaceutical_service'
 ]
